@@ -1,0 +1,29 @@
+#include <bits/stdc++.h>
+#define MAXN 107
+using namespace std;
+double mem[MAXN][MAXN][MAXN];
+double A[MAXN];
+int n;
+double dp( int a, int b, int k ){
+	if( mem[a][b][k]!=1000000 )
+		return mem[a][b][k];
+	if( b<a)
+		return 0;
+	if( a == b )
+		return A[a]*k;
+	for( int i =a; i<=b;i++)
+		mem[a][b][k] = min( mem[a][b][k],dp(a,i-1,k+1)+dp(i+1,b,k+1) + A[i]*k);
+	return mem[a][b][k];
+}
+int main(void){
+	
+	while(scanf("%d",&n)!=EOF){
+		for(int i=1;i<=n;i++)
+			scanf("%lf",&A[i]);
+	for(int i=0; i<=n;i++)
+		for(int j=0;j<=n;j++)
+			for(int k=0;k<=n;k++)
+				mem[i][j][k] =1000000;
+	printf("%.4lf\n",dp(1,n,1) );
+	}
+}
